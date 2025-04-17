@@ -70,6 +70,33 @@ This project is ideal for embedded AI, IoT, and smart display applications.
 
 ---
 
+## Secrets Management
+
+Sensitive information (WiFi credentials, API keys) is managed in a separate file called `secrets.h`.
+
+### How to Set Up Your Secrets
+1. **Copy and Edit `secrets.h`:**
+   - If `secrets.h` does not exist, create it in the project root (next to your `.ino` file).
+   - Add the following content and fill in your real credentials:
+     ```cpp
+     // secrets.h
+     // DO NOT COMMIT THIS FILE TO VERSION CONTROL!
+     // Fill in your own credentials below.
+     #pragma once
+     const char* ssid = "YOUR_WIFI_SSID";
+     const char* password = "YOUR_WIFI_PASSWORD";
+     const char* openai_api_key = "YOUR_OPENAI_API_KEY";
+     const char* IMGUR_CLIENT_ID = "YOUR_IMGUR_CLIENT_ID";
+     ```
+2. **Do NOT Commit `secrets.h`:**
+   - Add `secrets.h` to your `.gitignore` file:
+     ```
+     secrets.h
+     ```
+   - This prevents your credentials from being published to GitHub or other public repositories.
+
+---
+
 ## Setup Instructions
 
 ### 1. Install Arduino IDE and ESP32 Board Support
@@ -91,22 +118,8 @@ This project is ideal for embedded AI, IoT, and smart display applications.
 - Ensure `qrcode.h` and `qrcode.c` are present in the project directory
 
 ### 4. Configure Your Credentials
-- Open `ESP32S3CAMERA.ino`
-- Set your WiFi SSID and password:
-  ```cpp
-  const char* ssid = "YOUR_WIFI_SSID";
-  const char* password = "YOUR_WIFI_PASSWORD";
-  ```
-- Set your OpenAI API key (get one from https://platform.openai.com/):
-  ```cpp
-  const char* openai_api_key = "sk-...";
-  ```
-- (Optional) Set your Imgur Client ID (get one from https://api.imgur.com/oauth2/addclient):
-  ```cpp
-  const char* IMGUR_CLIENT_ID = "...";
-  ```
-
-**WARNING:** _Never commit your API keys or WiFi credentials to public repositories!_
+- **Edit `secrets.h`** as described above with your WiFi, OpenAI, and Imgur credentials.
+- **Do not edit the main `.ino` file for credentials.**
 
 ### 5. Select the Correct Board and Port
 - Tools > Board: "ESP32S3 Dev Module"
@@ -132,6 +145,7 @@ This project is ideal for embedded AI, IoT, and smart display applications.
 
 ## File Structure
 - `ESP32S3CAMERA.ino` — Main application
+- `secrets.h` — **Your private credentials (never commit this!)**
 - `qrcode.h` / `qrcode.c` — QR code generation (MIT License)
 - `lv_conf.h` — LVGL configuration
 - `apidocs.imgur.com.pem` — Imgur root certificate
